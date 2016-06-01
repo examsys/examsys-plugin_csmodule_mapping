@@ -60,7 +60,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $password = $this->config->get_setting($this->plugin, 'password');
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
         $restful = new \restful($this->db);
-        $response = $restful->get($url);
+        $response = $restful->get($url, $timeout, $username, $password);
         if ($response == '') {
             return $source;
         }
