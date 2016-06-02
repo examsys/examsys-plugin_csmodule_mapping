@@ -41,7 +41,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
      * @param string $source source module code
      * @return string target module code
      */
-    private function callws($source) {
+    public function callws($source) {
         $langpack = new \langpack();
         $strings = $langpack->get_all_strings($this->langcomponent);
         $url = $this->config->get_setting($this->plugin, 'url');
@@ -139,9 +139,9 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
             if (!isset($info['country']) or $info['country'] == 'UNUK') {
                 $target = $info['module'];
             } elseif ($info['country'] == 'UNNC') {
-                $target = $info['module'] . $info['country'];
+                $target = $info['module'] . '_' . $info['country'];
             } elseif ($info['country'] == 'UNMC') {
-                $target = $info['module']. $info['country'];
+                $target = $info['module']. '_' . $info['country'];
             }
         } else {
             // Saturn Country mapping.
@@ -149,8 +149,10 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
              if (count($info) > 0) {
                 if (!isset($info['country']) or $info['country'] == 'UK') {
                     $target = $info['module'];
-                } else {
-                    $target = $info['module'] . $info['country'];
+                } elseif ($info['country'] == 'CN') {
+                    $target = $info['module'] . '_UNNC';
+                } elseif ($info['country'] == 'MY') {
+                    $target = $info['module'] . '_UNMC';
                 }
             }
         }

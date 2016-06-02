@@ -1,0 +1,37 @@
+config:
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "filterfields"
+    value: "A.UN_SATURN_MODUL_CD,A.UN_CAMPUS_MODUL_CD"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "installed"
+    value: 0
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "isconnectedquery"
+    value: "N"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "maxrows"
+    value: 1
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "password"
+    value: "password"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "prompt_uniquepromptname"
+    value: "CAMPUS_MODUL_CD"   
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "timeout"
+    value: 10
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "url"
+    value: "https://csdev.transform.nottingham.ac.uk/PSIGW/RESTListeningConnector/CSDEV/ExecuteQuery.v1/PUBLIC/UN_CAMPUS_TO_SATURN_MOD_MAP/WEBROWSET/NONFILE?"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "username"
+    value: "username"
