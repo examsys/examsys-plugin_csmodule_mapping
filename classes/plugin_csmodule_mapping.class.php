@@ -59,8 +59,19 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $username = $this->config->get_setting($this->plugin, 'username');
         $password = $this->config->get_setting($this->plugin, 'password');
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
+        // You might need to disable verify ssl peer when testing.
+        $options = array(CURLOPT_TIMEOUT => $timeout,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_FAILONERROR => true
+        );
+        // Auth options.
+        if ($username != '') {
+            $authoptions = array(CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+                CURLOPT_USERPWD => $username . ':' . $password);
+            $options += $authoptions;
+        }
         $restful = new \restful($this->db);
-        $response = $restful->get($url, $timeout, $username, $password);
+        $response = $restful->get($url, $options);
         if ($response == '') {
             return $source;
         }
