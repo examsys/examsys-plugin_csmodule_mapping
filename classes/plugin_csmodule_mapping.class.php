@@ -59,9 +59,8 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $username = $this->config->get_setting($this->plugin, 'username');
         $password = $this->config->get_setting($this->plugin, 'password');
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
-        // You might need to disable verify ssl peer when testing.
         $options = array(CURLOPT_TIMEOUT => $timeout,
-            CURLOPT_SSL_VERIFYPEER => true
+            CURLOPT_SSL_VERIFYPEER => false
         );
         // Auth options.
         if ($username != '') {
