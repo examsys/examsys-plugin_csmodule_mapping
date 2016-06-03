@@ -2,7 +2,7 @@ config:
   -
     component: "plugin_csmodule_mapping"
     setting: "filterfields"
-    value: "A.UN_SATURN_MODUL_CD,A.UN_CAMPUS_MODUL_CD"
+    value: "filterfields"
   -
     component: "plugin_csmodule_mapping"
     setting: "installed"
@@ -21,7 +21,7 @@ config:
     value: "password"
   -
     component: "plugin_csmodule_mapping"
-    setting: "prompt_uniquepromptname"
+    setting: "promptname"
     value: "CAMPUS_MODUL_CD"   
   -
     component: "plugin_csmodule_mapping"
@@ -30,7 +30,7 @@ config:
   -
     component: "plugin_csmodule_mapping"
     setting: "url"
-    value: "https://csdev.transform.nottingham.ac.uk/PSIGW/RESTListeningConnector/CSDEV/ExecuteQuery.v1/PUBLIC/UN_CAMPUS_TO_SATURN_MOD_MAP/WEBROWSET/NONFILE?"
+    value: "https://www.example.com"
   -
     component: "plugin_csmodule_mapping"
     setting: "username"
