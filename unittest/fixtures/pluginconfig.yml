@@ -21,8 +21,8 @@ config:
     value: "password"
   -
     component: "plugin_csmodule_mapping"
-    setting: "promptname"
-    value: "CAMPUS_MODUL_CD"   
+    setting: "prompt_uniquepromptname"
+    value: "promptname"   
   -
     component: "plugin_csmodule_mapping"
     setting: "timeout"
