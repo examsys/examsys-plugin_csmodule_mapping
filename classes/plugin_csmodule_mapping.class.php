@@ -57,7 +57,8 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         // Strip last &.
         $url = substr($url, 0, -1);
         $username = $this->config->get_setting($this->plugin, 'username');
-        $password = $this->config->get_setting($this->plugin, 'password');
+        $encryp = new \encryp();
+        $password = $encryp->mdecrypt_password($this->config->get_setting($this->plugin, 'password'));
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
         $options = array(CURLOPT_TIMEOUT => $timeout,
             CURLOPT_SSL_VERIFYPEER => false
