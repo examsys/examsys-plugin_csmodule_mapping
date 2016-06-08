@@ -113,46 +113,20 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
                 $source .= '-UNUK';
             }
         } else {
-            // Check is source is saturn.
-            preg_match("/^(?P<module>[A-Z0-9]{6})(_(?P<country>UNNC|UNMC))?$/", $source, $info);
-            if (count($info) > 0) {
-                // Campus expect saturn code to use 2 character campus code. i.e. CN not UNNC
-                $source = $info['module'];
-                if (!isset($info['country']) or $info['country'] == 'UNUK') {
-                    $source .= '-UK';
-                } elseif ($info['country'] == 'UNNC') {
-                    $source .= '-CN';
-                } elseif ($info['country'] == 'UNMC') {
-                    $source .= '-MY';
-                }
-            } else {
-                // Return source module id if naming convention not recognised.
-                return $source;
-            }
+            // Return source module id if naming convention not recognised.
+            return $source;
         }
         // Call web service.
         $target = $this->callws($source);
-        // CS country mapping.
-        preg_match("/^(?P<module>[A-Z]{4}[F1-5][0-9]{3})-(?P<country>UNUK|UNNC|UNMC)$/", $target, $info);
+        // Saturn Country mapping.
+        preg_match("/^(?P<module>[A-Z0-9]{6})-(?P<country>UK|CN|MY)$/", $target, $info);
         if (count($info) > 0) {
-            if (!isset($info['country']) or $info['country'] == 'UNUK') {
+            if (!isset($info['country']) or $info['country'] == 'UK') {
                 $target = $info['module'];
-            } elseif ($info['country'] == 'UNNC') {
-                $target = $info['module'] . '_' . $info['country'];
-            } elseif ($info['country'] == 'UNMC') {
-                $target = $info['module']. '_' . $info['country'];
-            }
-        } else {
-            // Saturn Country mapping.
-            preg_match("/^(?P<module>[A-Z0-9]{6})-(?P<country>UK|CN|MY)$/", $target, $info);
-             if (count($info) > 0) {
-                if (!isset($info['country']) or $info['country'] == 'UK') {
-                    $target = $info['module'];
-                } elseif ($info['country'] == 'CN') {
-                    $target = $info['module'] . '_UNNC';
-                } elseif ($info['country'] == 'MY') {
-                    $target = $info['module'] . '_UNMC';
-                }
+            } elseif ($info['country'] == 'CN') {
+                $target = $info['module'] . '_UNNC';
+            } elseif ($info['country'] == 'MY') {
+                $target = $info['module'] . '_UNMC';
             }
         }
         return $target;
