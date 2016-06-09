@@ -81,7 +81,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $datanode = $data->getElementsByTagName('data')->item(0);
         if (!$datanode->hasChildNodes()) {
             $log = new \Logger($this->db);
-            $userObj = $userObject = \UserObject::get_instance();
+            $userObj = \UserObject::get_instance();
             $userid = $userObj->get_user_ID();
             $username = $userObj->get_username();
             $errorfile = $_SERVER['PHP_SELF'];
