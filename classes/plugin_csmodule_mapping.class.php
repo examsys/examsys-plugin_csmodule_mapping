@@ -61,7 +61,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $password = $encryp->mdecrypt_password($this->config->get_setting($this->plugin, 'password'));
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
         $options = array(CURLOPT_TIMEOUT => $timeout,
-            CURLOPT_SSL_VERIFYPEER => false
+            CURLOPT_SSL_VERIFYPEER => $this->config->get_setting($this->plugin, 'ssl_verify')
         );
         // Auth options.
         if ($username != '') {

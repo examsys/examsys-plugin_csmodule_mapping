@@ -6,3 +6,4 @@ INSERT IGNORE INTO config (component, setting, value) values ('plugin_csmodule_m
 INSERT IGNORE INTO config (component, setting, value) values ('plugin_csmodule_mapping', 'username', 'username');
 INSERT IGNORE INTO config (component, setting, value) values ('plugin_csmodule_mapping', 'password', 'password');
 INSERT IGNORE INTO config (component, setting, value) values ('plugin_csmodule_mapping', 'timeout', 10);
+INSERT IGNORE INTO config (component, setting, value) values ('plugin_csmodule_mapping', 'ssl_verify', 1);
