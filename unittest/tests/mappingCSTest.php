@@ -142,20 +142,4 @@ class mappingcstest extends unittestdatabase {
         $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
     }
-    /**
-     * Test get plugin version from file
-     * @group mapping
-     */
-    public function test_get_file_version() {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
-        $this->assertEquals($mapping->get_file_version(), $mapping->get_file_version());
-    }
-    /**
-     * Test get plugin requires from file
-     * @group mapping
-     */
-    public function test_get_file_requires() {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
-        $this->assertEquals($mapping->get_file_requires(), $mapping->get_file_requires());
-    }
 }
