@@ -39,12 +39,12 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
     /**
      * Call web service to retrieve mapping information.
      * @param string $source source module code
-     * @return string target module code
+     * @return string|bool target module code or false if no target found
      */
     public function callws($source) {
         $langpack = new \langpack();
         $strings = $langpack->get_all_strings($this->langcomponent);
-        $url = $this->config->get_setting($this->plugin, 'url');
+        $url = $this->config->get_setting($this->plugin, 'url') . '?';
         $data = array('isconnectedquery' => $this->config->get_setting($this->plugin, 'isconnectedquery'),
                 'maxrows' => $this->config->get_setting($this->plugin, 'maxrows'),
                 'prompt_uniquepromptname' => $this->config->get_setting($this->plugin, 'prompt_uniquepromptname'),
@@ -72,7 +72,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $restful = new \restful($this->db);
         $response = $restful->get($url, $options);
         if ($response == '') {
-            return $source;
+            return false;
         }
         // Parse returned XML.
         $data = new \DOMDocument();
@@ -87,16 +87,15 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
             $errorfile = $_SERVER['PHP_SELF'];
             $errorline = __LINE__ - 5;
             $log->record_application_warning($userid, $username, $strings['restnodata'], $errorfile, $errorline);
-            return $source;
+            return false;
         }
         $items = $data->getElementsByTagName('currentRow');
         $row = array();
         foreach ($items as $item) {
             foreach ($item->childNodes as $childnode) {
-                $row[] = $childnode->nodeValue;
+                return $childnode->nodeValue;
             }
         }
-        return $row[0];
     }
     /**
      * Getting saturn<->campus module mapping
@@ -118,6 +117,9 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         }
         // Call web service.
         $target = $this->callws($source);
+        if ($target === false) {
+            $target = $source;
+        }
         // Saturn Country mapping.
         preg_match("/^(?P<module>[A-Z0-9]{6})-(?P<country>UK|CN|MY)$/", $target, $info);
         if (count($info) > 0) {

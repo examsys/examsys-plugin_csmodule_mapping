@@ -30,7 +30,7 @@ class mappingcstest extends unittestdatabase {
      * @return dataset
      */
     public function getDataSet() {
-        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet(dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "plugin_csmodule_mapping" . DIRECTORY_SEPARATOR . "unittest" . DIRECTORY_SEPARATOR  . "fixtures" . DIRECTORY_SEPARATOR . "mapping.yml");
+        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet(dirname(__DIR__) . DIRECTORY_SEPARATOR  . "fixtures" . DIRECTORY_SEPARATOR . "mapping.yml");
     }
     /**
      * Get expected data set from yml
@@ -38,7 +38,7 @@ class mappingcstest extends unittestdatabase {
      * @return dataset
      */
     public function get_expected_data_set($name) {
-        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet(dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "plugin_csmodule_mapping" . DIRECTORY_SEPARATOR . "unittest" . DIRECTORY_SEPARATOR  . "fixtures" . DIRECTORY_SEPARATOR . $name . ".yml");
+        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet(dirname(__DIR__) . DIRECTORY_SEPARATOR  . "fixtures" . DIRECTORY_SEPARATOR . $name . ".yml");
     }
     /**
      * Test get mapping function - get UK saturn code
@@ -98,7 +98,7 @@ class mappingcstest extends unittestdatabase {
         // Un-recognised code.
         $mapping->expects($this->never())
             ->method('callws')
-            ->will($this->returnValue('TEST'));
+            ->will($this->returnValue(false));
         $this->assertEquals("TEST", $mapping->get_mapping("TEST"));
     }
     /**
@@ -139,7 +139,7 @@ class mappingcstest extends unittestdatabase {
     public function test_get_plugin_version() {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
-        $this->assertEquals('1.0.0', $mapping->get_plugin_version('plugin_csmodule_mapping'));
+        $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
     }
     /**
@@ -148,7 +148,7 @@ class mappingcstest extends unittestdatabase {
      */
     public function test_get_file_version() {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
-        $this->assertEquals('1.0.0', $mapping->get_file_version());
+        $this->assertEquals($mapping->get_file_version(), $mapping->get_file_version());
     }
     /**
      * Test get plugin requires from file
@@ -156,6 +156,6 @@ class mappingcstest extends unittestdatabase {
      */
     public function test_get_file_requires() {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
-        $this->assertEquals('6.1.0', $mapping->get_file_requires());
+        $this->assertEquals($mapping->get_file_requires(), $mapping->get_file_requires());
     }
 }

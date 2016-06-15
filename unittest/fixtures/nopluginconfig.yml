@@ -22,7 +22,11 @@ config:
   -
     component: "plugin_csmodule_mapping"
     setting: "prompt_uniquepromptname"
-    value: "promptname"   
+    value: "promptname" 
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "ssl_verify"
+    value: "1"  
   -
     component: "plugin_csmodule_mapping"
     setting: "timeout"
