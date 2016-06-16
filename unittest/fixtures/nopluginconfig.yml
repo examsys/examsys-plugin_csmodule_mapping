@@ -1,0 +1,41 @@
+config:
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "filterfields"
+    value: "filterfields"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "installed"
+    value: 0
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "isconnectedquery"
+    value: "N"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "maxrows"
+    value: 1
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "password"
+    value: "password"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "prompt_uniquepromptname"
+    value: "promptname" 
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "ssl_verify"
+    value: "1"  
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "timeout"
+    value: 10
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "url"
+    value: "https://www.example.com"
+  -
+    component: "plugin_csmodule_mapping"
+    setting: "username"
+    value: "username"
