@@ -112,7 +112,7 @@ class mappingcstest extends unittestdatabase {
         $queryTable = $this->getConnection()->createQueryTable('plugins', 'SELECT component, version, type FROM plugins');
         $expectedTable = $this->get_expected_data_set('pluginconfig')->getTable("plugins");
         $this->assertTablesEqual($expectedTable, $queryTable);
-        $queryTable = $this->getConnection()->createQueryTable('config', 'SELECT * FROM config order by 1, 2');
+        $queryTable = $this->getConnection()->createQueryTable('config', 'SELECT component, setting, value FROM config order by 1, 2');
         $expectedTable = $this->get_expected_data_set('pluginconfig')->getTable("config");
         $this->assertTablesEqual($expectedTable, $queryTable);
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
@@ -128,7 +128,7 @@ class mappingcstest extends unittestdatabase {
         // Check tables are correct.
         $queryTable = $this->getConnection()->getRowCount('plugins');
         $this->assertEquals(0, $queryTable);
-        $queryTable = $this->getConnection()->createQueryTable('config', 'SELECT * FROM config  order by 1, 2');
+        $queryTable = $this->getConnection()->createQueryTable('config', 'SELECT component, setting, value FROM config order by 1, 2');
         $expectedTable = $this->get_expected_data_set('nopluginconfig')->getTable("config");
         $this->assertTablesEqual($expectedTable, $queryTable);
     }
