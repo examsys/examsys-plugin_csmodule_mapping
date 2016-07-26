@@ -15,3 +15,12 @@
 // along with Rogō.  If not, see <http://www.gnu.org/licenses/>.
 
 $string['restnodata'] = 'No data returned';
+$string['filterfields'] = 'Argument sent to the web service to indicate which mapping to do.';
+$string['isconnectedquery'] = 'Argument sent to the web service to tell it how to execute the query. Should be set to "N".';
+$string['maxrows'] = 'The maximum number of row the web service will return. Should be set to 1.';
+$string['password'] = 'The password required by the sms web service.';
+$string['prompt_uniquepromptname'] = 'Argument sent to the web service to indicate which mapping to do.';
+$string['ssl_verify'] = 'Enable/Disable verifying the ssl connection.';
+$string['timeout'] = 'Time limit in seconds before Rogo gives up calling the web service if no response.';
+$string['url'] = 'The url of the web service.';
+$string['username'] = 'The username required by the web service.';
