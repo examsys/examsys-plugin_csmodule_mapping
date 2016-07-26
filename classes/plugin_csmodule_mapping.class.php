@@ -35,7 +35,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
     /**
      * Language pack component.
      */
-    private $langcomponent = 'plugins/mapping/plugin_csmodule_mapping/plugin_csmodule_mapping';
+    protected $langcomponent = 'plugins/mapping/plugin_csmodule_mapping/plugin_csmodule_mapping';
     /**
      * Call web service to retrieve mapping information.
      * @param string $source source module code
