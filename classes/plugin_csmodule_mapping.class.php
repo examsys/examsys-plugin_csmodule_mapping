@@ -140,16 +140,16 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
      */
     public function enable_plugin() {
         $enabled = array($this->plugin);
-        $this->config->set_setting('enabled_plugin', json_encode($enabled), \Config::JSON, 'plugin_' . $this->plugin_type);
+        $this->config->set_setting('enabled_plugin', $enabled, \Config::JSON, 'plugin_' . $this->plugin_type);
     }
     /**
      * Disable this plugin
      * Only one module mapping plugin should be enabled at anyone time
      */
     public function disable_plugin() {
-        $enabled = json_decode($this->config->get_setting('plugin_' . $this->plugin_type, 'enabled_plugin'));
+        $enabled = $this->config->get_setting('plugin_' . $this->plugin_type, 'enabled_plugin');
         if ($this->plugin == $enabled[0]) {
-            $this->config->set_setting('enabled_plugin', json_encode(array()), \Config::JSON,  'plugin_' . $this->plugin_type);
+            $this->config->set_setting('enabled_plugin', array(), \Config::JSON,  'plugin_' . $this->plugin_type);
         }
     }
 }
