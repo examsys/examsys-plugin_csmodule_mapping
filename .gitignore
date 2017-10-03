@@ -1,2 +1,4 @@
 *.phprj
 *.project
+/nbproject/private/
+nbproject/
