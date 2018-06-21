@@ -2,3 +2,4 @@
 *.project
 /nbproject/private/
 nbproject/
+.idea/
