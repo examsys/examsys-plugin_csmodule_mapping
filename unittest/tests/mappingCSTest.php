@@ -107,7 +107,7 @@ class mappingcstest extends unittestdatabase {
      * @group mapping
      */
     public function test_install() {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
         $queryTable = $this->getConnection()->createQueryTable('plugins', 'SELECT component, version, type FROM plugins');
@@ -123,7 +123,7 @@ class mappingcstest extends unittestdatabase {
      * @group mapping
      */
     public function test_uninstall() {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals('OK', $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
@@ -138,7 +138,7 @@ class mappingcstest extends unittestdatabase {
      * @group mapping
      */
     public function test_get_plugin_version() {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
