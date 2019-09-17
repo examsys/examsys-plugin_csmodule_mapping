@@ -25,6 +25,14 @@ use testing\unittest\unittestdatabase;
  * @package tests
  */
 class mappingcstest extends unittestdatabase {
+
+    /**
+     * Generate data for test.
+     */
+    public function datageneration() : void {
+        // Currently only base data required.
+    }
+
     /**
      * Test get mapping function - get UK saturn code
      * @group mapping
