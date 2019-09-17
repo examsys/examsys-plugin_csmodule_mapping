@@ -25,12 +25,17 @@ use testing\unittest\unittestdatabase;
  * @package tests
  */
 class mappingcstest extends unittestdatabase {
+    /**
+     * @var integer new version of plugin being installed
+     */
+    private $newversion;
 
     /**
      * Generate data for test.
      */
     public function datageneration() : void {
-        // Currently only base data required.
+        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $this->newversion = $mapping->get_file_version();
     }
 
     /**
@@ -106,11 +111,12 @@ class mappingcstest extends unittestdatabase {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
-        $queryTable = $this->query(array('columns' => array('component', 'type'), 'table' => 'plugins'));
+        $queryTable = $this->query(array('columns' => array('component', 'type', 'version'), 'table' => 'plugins'));
         $expectedTable = array(
             0 => array(
                 'component' => "plugin_csmodule_mapping",
-                'type' => "mapping"
+                'type' => "mapping",
+                'version' => $this->newversion
             )
         );
         $this->assertEquals($expectedTable, $queryTable);
