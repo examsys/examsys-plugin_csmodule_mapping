@@ -29,17 +29,17 @@ namespace plugins\mapping\plugin_csmodule_mapping;
  */
 class plugin_csmodule_mapping extends \plugins\plugins_mapping
 {
-
-
     /**
      * Name of the plugin;
      * @var string
      */
     protected $plugin = 'plugin_csmodule_mapping';
-/**
+
+    /**
      * Language pack component.
      */
     protected $langcomponent = 'plugins/mapping/plugin_csmodule_mapping/plugin_csmodule_mapping';
+
     /**
      * Call web service to retrieve mapping information.
      * @param string $source source module code
@@ -55,7 +55,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
                 'prompt_uniquepromptname' => $this->config->get_setting($this->plugin, 'prompt_uniquepromptname'),
                 'prompt_fieldvalue' => $source,
                 'filterfields' => $this->config->get_setting($this->plugin, 'filterfields'));
-// Add parameters onto GET request.
+        // Add parameters onto GET request.
         foreach ($data as $param => $value) {
             $url .= $param . '=' . $value . '&';
         }
@@ -67,7 +67,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
         $options = array(CURLOPT_TIMEOUT => $timeout,
             CURLOPT_SSL_VERIFYPEER => $this->config->get_setting($this->plugin, 'ssl_verify')
         );
-// Auth options.
+        // Auth options.
         if ($username != '') {
             $authoptions = array(CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
                 CURLOPT_USERPWD => $username . ':' . $password);
@@ -81,7 +81,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
         // Parse returned XML.
         $data = new \DOMDocument();
         $data->loadXML($response);
-// Check data returned. Return source code if no data.
+        // Check data returned. Return source code if no data.
         $datanode = $data->getElementsByTagName('data')->item(0);
         if (!$datanode->hasChildNodes()) {
             $log = new \Logger($this->db);
@@ -101,6 +101,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
             }
         }
     }
+
     /**
      * Getting saturn<->campus module mapping
      * @param string $source source module code
@@ -111,13 +112,13 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
         // Check if source is campus solutions.
         preg_match('/^(?P<module>[A-Z]{4}[F1-5][0-9]{3})(_(?P<country>UNNC|UNMC))?$/', $source, $info);
         if (count($info) > 0) {
-        // Campus expects country to be supplied so if not use UNUK.
+            // Campus expects country to be supplied so if not use UNUK.
             $source = $info['module'];
             if (!isset($info['country'])) {
                 $source .= '-UNUK';
             }
         } else {
-        // Return source module id if naming convention not recognised.
+            // Return source module id if naming convention not recognised.
             return $source;
         }
         // Call web service.
