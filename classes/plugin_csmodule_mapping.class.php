@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Rogō
 //
 // Rogō is free software: you can redistribute it and/or modify
@@ -18,7 +19,7 @@ namespace plugins\mapping\plugin_csmodule_mapping;
 
 /**
 * Mapping plugin helper file
-* 
+*
 * @author Dr Joseph Baxter <joseph.baxter@nottingham.ac.uk>
 * @copyright Copyright (c) 2016 onwards The University of Nottingham
 */
@@ -26,13 +27,16 @@ namespace plugins\mapping\plugin_csmodule_mapping;
 /**
  * Module mapping plugin.
  */
-class plugin_csmodule_mapping extends \plugins\plugins_mapping {
+class plugin_csmodule_mapping extends \plugins\plugins_mapping
+{
+
+
     /**
      * Name of the plugin;
      * @var string
      */
     protected $plugin = 'plugin_csmodule_mapping';
-    /**
+/**
      * Language pack component.
      */
     protected $langcomponent = 'plugins/mapping/plugin_csmodule_mapping/plugin_csmodule_mapping';
@@ -41,7 +45,8 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
      * @param string $source source module code
      * @return string|bool target module code or false if no target found
      */
-    public function callws($source) {
+    public function callws($source)
+    {
         $langpack = new \langpack();
         $strings = $langpack->get_all_strings($this->langcomponent);
         $url = $this->config->get_setting($this->plugin, 'url') . '?';
@@ -50,7 +55,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
                 'prompt_uniquepromptname' => $this->config->get_setting($this->plugin, 'prompt_uniquepromptname'),
                 'prompt_fieldvalue' => $source,
                 'filterfields' => $this->config->get_setting($this->plugin, 'filterfields'));
-        // Add parameters onto GET request.
+// Add parameters onto GET request.
         foreach ($data as $param => $value) {
             $url .= $param . '=' . $value . '&';
         }
@@ -62,7 +67,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         $options = array(CURLOPT_TIMEOUT => $timeout,
             CURLOPT_SSL_VERIFYPEER => $this->config->get_setting($this->plugin, 'ssl_verify')
         );
-        // Auth options.
+// Auth options.
         if ($username != '') {
             $authoptions = array(CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
                 CURLOPT_USERPWD => $username . ':' . $password);
@@ -76,7 +81,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
         // Parse returned XML.
         $data = new \DOMDocument();
         $data->loadXML($response);
-        // Check data returned. Return source code if no data.
+// Check data returned. Return source code if no data.
         $datanode = $data->getElementsByTagName('data')->item(0);
         if (!$datanode->hasChildNodes()) {
             $log = new \Logger($this->db);
@@ -101,17 +106,18 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
      * @param string $source source module code
      * @return string orginial $source if mapping not found, $target if mapping found
      */
-    public function get_mapping($source) {
+    public function get_mapping($source)
+    {
         // Check if source is campus solutions.
-        preg_match("/^(?P<module>[A-Z]{4}[F1-5][0-9]{3})(_(?P<country>UNNC|UNMC))?$/", $source, $info);
+        preg_match('/^(?P<module>[A-Z]{4}[F1-5][0-9]{3})(_(?P<country>UNNC|UNMC))?$/', $source, $info);
         if (count($info) > 0) {
-            // Campus expects country to be supplied so if not use UNUK.
+        // Campus expects country to be supplied so if not use UNUK.
             $source = $info['module'];
             if (!isset($info['country'])) {
                 $source .= '-UNUK';
             }
         } else {
-            // Return source module id if naming convention not recognised.
+        // Return source module id if naming convention not recognised.
             return $source;
         }
         // Call web service.
@@ -120,7 +126,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping {
             $target = $source;
         }
         // Saturn Country mapping.
-        preg_match("/^(?P<module>[A-Z0-9]{6})-(?P<country>UK|CN|MY)$/", $target, $info);
+        preg_match('/^(?P<module>[A-Z0-9]{6})-(?P<country>UK|CN|MY)$/', $target, $info);
         if (count($info) > 0) {
             if (!isset($info['country']) or $info['country'] == 'UK') {
                 $target = $info['module'];
