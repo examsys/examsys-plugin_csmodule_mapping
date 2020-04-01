@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Rogō
 //
 // Rogō is free software: you can redistribute it and/or modify
@@ -18,13 +19,14 @@ use testing\unittest\unittestdatabase;
 
 /**
  * Test cs mapping functions
- * 
+ *
  * @author Dr Joseph Baxter <joseph.baxter@nottingham.ac.uk>
  * @version 1.0
  * @copyright Copyright (c) 2016 onwards The University of Nottingham
  * @package tests
  */
-class mappingcstest extends unittestdatabase {
+class mappingcstest extends unittestdatabase
+{
     /**
      * @var integer new version of plugin being installed
      */
@@ -33,7 +35,8 @@ class mappingcstest extends unittestdatabase {
     /**
      * Generate data for test.
      */
-    public function datageneration() : void {
+    public function datageneration(): void
+    {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
         $this->newversion = $mapping->get_file_version();
     }
@@ -42,7 +45,8 @@ class mappingcstest extends unittestdatabase {
      * Test get mapping function - get UK saturn code
      * @group mapping
      */
-    public function test_get_mapping_saturn() {
+    public function test_get_mapping_saturn()
+    {
         $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
             ->setMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
@@ -51,14 +55,15 @@ class mappingcstest extends unittestdatabase {
             ->method('callws')
             ->will($this->returnValue('G51MCS-UK'));
         // UK code.
-        $this->assertEquals("G51MCS", $mapping->get_mapping("COMP1007"));
+        $this->assertEquals('G51MCS', $mapping->get_mapping('COMP1007'));
     }
 
     /**
      * Test get mapping function - get MY saturn code
      * @group mapping
      */
-    public function test_get_mapping_saturn_my() {
+    public function test_get_mapping_saturn_my()
+    {
         $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
             ->setMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
@@ -67,14 +72,15 @@ class mappingcstest extends unittestdatabase {
         $mapping->expects($this->once())
             ->method('callws')
             ->will($this->returnValue('G51MCS-MY'));
-        $this->assertEquals("G51MCS_UNMC", $mapping->get_mapping("COMP1019_UNMC"));
+        $this->assertEquals('G51MCS_UNMC', $mapping->get_mapping('COMP1019_UNMC'));
     }
 
     /**
      * Test get mapping function - get CN saturn code
      * @group mapping
      */
-    public function test_get_mapping_saturn_cn() {
+    public function test_get_mapping_saturn_cn()
+    {
         $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
             ->setMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
@@ -83,14 +89,15 @@ class mappingcstest extends unittestdatabase {
         $mapping->expects($this->once())
             ->method('callws')
             ->will($this->returnValue('G51MCS-CN'));
-        $this->assertEquals("G51MCS_UNNC", $mapping->get_mapping("COMP1036_UNNC"));
+        $this->assertEquals('G51MCS_UNNC', $mapping->get_mapping('COMP1036_UNNC'));
     }
 
     /**
      * Test get mapping function - unrecognised code
      * @group mapping
      */
-    public function test_get_mapping_unknown() {
+    public function test_get_mapping_unknown()
+    {
         // webs ervice should not be called.
         $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
             ->setMethods(array('callws'))
@@ -100,22 +107,23 @@ class mappingcstest extends unittestdatabase {
         $mapping->expects($this->never())
             ->method('callws')
             ->will($this->returnValue(false));
-        $this->assertEquals("TEST", $mapping->get_mapping("TEST"));
+        $this->assertEquals('TEST', $mapping->get_mapping('TEST'));
     }
 
     /**
      * Test install mapping plugin - already installed on setup
      * @group mapping
      */
-    public function test_install() {
+    public function test_install()
+    {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
         $queryTable = $this->query(array('columns' => array('component', 'type', 'version'), 'table' => 'plugins'));
         $expectedTable = array(
             0 => array(
-                'component' => "plugin_csmodule_mapping",
-                'type' => "mapping",
+                'component' => 'plugin_csmodule_mapping',
+                'type' => 'mapping',
                 'version' => $this->newversion
             )
         );
@@ -124,10 +132,10 @@ class mappingcstest extends unittestdatabase {
             'where' => array(array('column' => 'component', 'value' => 'plugin_csmodule_mapping'), array('column' => 'setting', 'value' => 'installed'))));
         $expectedTable = array(
             0 => array(
-                'component' => "plugin_csmodule_mapping",
-                'setting' => "installed",
+                'component' => 'plugin_csmodule_mapping',
+                'setting' => 'installed',
                 'value' => 1,
-                'type' => "boolean"
+                'type' => 'boolean'
             ),
         );
         $this->assertEquals($expectedTable, $queryTable);
@@ -138,7 +146,8 @@ class mappingcstest extends unittestdatabase {
      * Test uninstall mapping plugin - already installed on setup
      * @group mapping
      */
-    public function test_uninstall() {
+    public function test_uninstall()
+    {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals('OK', $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
@@ -149,10 +158,10 @@ class mappingcstest extends unittestdatabase {
             'where' => array(array('column' => 'component', 'value' => 'plugin_csmodule_mapping'), array('column' => 'setting', 'value' => 'installed'))));
         $expectedTable = array(
             0 => array(
-                'component' => "plugin_csmodule_mapping",
-                'setting' => "installed",
+                'component' => 'plugin_csmodule_mapping',
+                'setting' => 'installed',
                 'value' => 0,
-                'type' => "boolean"
+                'type' => 'boolean'
             ),
         );
         $this->assertEquals($expectedTable, $queryTable);
@@ -162,7 +171,8 @@ class mappingcstest extends unittestdatabase {
      * Test check plugin version
      * @group mapping
      */
-    public function test_get_plugin_version() {
+    public function test_get_plugin_version()
+    {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
