@@ -23,4 +23,4 @@
 */
 
 $this->version = '1.2.1';
-$this->requires = '7.1.1';
+$this->requires = '7.2.0';
