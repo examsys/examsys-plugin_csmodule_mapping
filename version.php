@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Rogō
 //
 // Rogō is free software: you can redistribute it and/or modify
@@ -16,9 +17,10 @@
 
 /**
 * Mapping version file
-* 
+*
 * @author Dr Joseph Baxter <joseph.baxter@nottingham.ac.uk>
 * @copyright Copyright (c) 2016 onwards The University of Nottingham
 */
-$this->version = '1.2.0';
-$this->requires = '7.1.0';
+
+$this->version = '1.2.1';
+$this->requires = '7.2.0';
