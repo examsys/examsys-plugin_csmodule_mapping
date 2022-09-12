@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Rogō.  If not, see <http://www.gnu.org/licenses/>.
 
+use plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping;
 use testing\unittest\unittestdatabase;
 
 /**
@@ -37,7 +38,7 @@ class mappingcstest extends unittestdatabase
      */
     public function datageneration(): void
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $mapping = new plugin_csmodule_mapping();
         $this->newversion = $mapping->get_file_version();
     }
 
@@ -116,7 +117,7 @@ class mappingcstest extends unittestdatabase
      */
     public function test_install()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
         $queryTable = $this->query(array('columns' => array('component', 'type', 'version'), 'table' => 'plugins'));
@@ -148,7 +149,7 @@ class mappingcstest extends unittestdatabase
      */
     public function test_uninstall()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals('OK', $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
@@ -173,7 +174,7 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_plugin_version()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version());
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
