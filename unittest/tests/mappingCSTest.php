@@ -48,8 +48,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         $mapping->expects($this->once())
@@ -65,8 +65,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn_my()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // Malaysia code.
@@ -82,8 +82,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn_cn()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // China code.
@@ -100,8 +100,8 @@ class mappingcstest extends unittestdatabase
     public function test_get_mapping_unknown()
     {
         // webs ervice should not be called.
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // Un-recognised code.
