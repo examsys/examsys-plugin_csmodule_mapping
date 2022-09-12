@@ -175,7 +175,7 @@ class mappingcstest extends unittestdatabase
     {
         $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
-        $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
+        $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version());
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
     }
 }
