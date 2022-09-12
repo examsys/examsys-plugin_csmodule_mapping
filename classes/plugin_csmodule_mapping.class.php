@@ -100,6 +100,7 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
                 return $childnode->nodeValue;
             }
         }
+        return false;
     }
 
     /**
