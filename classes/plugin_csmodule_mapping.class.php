@@ -94,12 +94,12 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
             return false;
         }
         $items = $data->getElementsByTagName('currentRow');
-        $row = array();
         foreach ($items as $item) {
             foreach ($item->childNodes as $childnode) {
                 return $childnode->nodeValue;
             }
         }
+        return false;
     }
 
     /**
