@@ -4,14 +4,14 @@ Copyright: University of Nottingham 2016 onwards
 Description:
 
 plugin_csmodule_mapping was developed for the University of Nottingham.
-It allows Rogō to map module codes from the SATURN student management system
+It allows ExamSys to map module codes from the SATURN student management system
 to the CAMPUS SOLUTIONS student management system and vice-versa by calling a web service
 hosted by a CAMPUS SOLUTIONS server.
 
 This is of use when connecting to systems that hold historic data refering to
-the SATURN codes when Rogō is referring to them as CAMPUS SOLUTION codes.
+the SATURN codes when ExamSys is referring to them as CAMPUS SOLUTION codes.
 
 Installation:
 
-1. Extract plugin_mapping archive into the plugins/mapping directory inside Rogō.
+1. Extract plugin_mapping archive into the plugins/mapping directory inside ExamSys.
 2. Install via the plugins/index.php admin screen.
