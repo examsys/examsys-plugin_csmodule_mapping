@@ -50,11 +50,11 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
         $langpack = new \langpack();
         $strings = $langpack->get_all_strings($this->langcomponent);
         $url = $this->config->get_setting($this->plugin, 'url') . '?';
-        $data = array('isconnectedquery' => $this->config->get_setting($this->plugin, 'isconnectedquery'),
+        $data = ['isconnectedquery' => $this->config->get_setting($this->plugin, 'isconnectedquery'),
                 'maxrows' => $this->config->get_setting($this->plugin, 'maxrows'),
                 'prompt_uniquepromptname' => $this->config->get_setting($this->plugin, 'prompt_uniquepromptname'),
                 'prompt_fieldvalue' => $source,
-                'filterfields' => $this->config->get_setting($this->plugin, 'filterfields'));
+                'filterfields' => $this->config->get_setting($this->plugin, 'filterfields')];
         // Add parameters onto GET request.
         foreach ($data as $param => $value) {
             $url .= $param . '=' . $value . '&';
@@ -64,13 +64,13 @@ class plugin_csmodule_mapping extends \plugins\plugins_mapping
         $username = $this->config->get_setting($this->plugin, 'username');
         $password = $this->config->get_setting($this->plugin, 'password');
         $timeout = $this->config->get_setting($this->plugin, 'timeout');
-        $options = array(CURLOPT_TIMEOUT => $timeout,
+        $options = [CURLOPT_TIMEOUT => $timeout,
             CURLOPT_SSL_VERIFYPEER => $this->config->get_setting($this->plugin, 'ssl_verify')
-        );
+        ];
         // Auth options.
         if ($username != '') {
-            $authoptions = array(CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-                CURLOPT_USERPWD => $username . ':' . $password);
+            $authoptions = [CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+                CURLOPT_USERPWD => $username . ':' . $password];
             $options += $authoptions;
         }
         $restful = new \restful($this->db);

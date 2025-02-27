@@ -49,8 +49,8 @@ class mappingcstest extends unittestdatabase
     public function test_get_mapping_saturn()
     {
         $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
-            ->onlyMethods(array('callws'))
-            ->setConstructorArgs(array($this->db))
+            ->onlyMethods(['callws'])
+            ->setConstructorArgs([$this->db])
             ->getMock();
         $mapping->expects($this->once())
             ->method('callws')
@@ -66,8 +66,8 @@ class mappingcstest extends unittestdatabase
     public function test_get_mapping_saturn_my()
     {
         $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
-            ->onlyMethods(array('callws'))
-            ->setConstructorArgs(array($this->db))
+            ->onlyMethods(['callws'])
+            ->setConstructorArgs([$this->db])
             ->getMock();
         // Malaysia code.
         $mapping->expects($this->once())
@@ -83,8 +83,8 @@ class mappingcstest extends unittestdatabase
     public function test_get_mapping_saturn_cn()
     {
         $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
-            ->onlyMethods(array('callws'))
-            ->setConstructorArgs(array($this->db))
+            ->onlyMethods(['callws'])
+            ->setConstructorArgs([$this->db])
             ->getMock();
         // China code.
         $mapping->expects($this->once())
@@ -101,8 +101,8 @@ class mappingcstest extends unittestdatabase
     {
         // webs ervice should not be called.
         $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
-            ->onlyMethods(array('callws'))
-            ->setConstructorArgs(array($this->db))
+            ->onlyMethods(['callws'])
+            ->setConstructorArgs([$this->db])
             ->getMock();
         // Un-recognised code.
         $mapping->expects($this->never())
@@ -120,25 +120,25 @@ class mappingcstest extends unittestdatabase
         $mapping = new plugin_csmodule_mapping();
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
-        $queryTable = $this->query(array('columns' => array('component', 'type', 'version'), 'table' => 'plugins'));
-        $expectedTable = array(
-            0 => array(
+        $queryTable = $this->query(['columns' => ['component', 'type', 'version'], 'table' => 'plugins']);
+        $expectedTable = [
+            0 => [
                 'component' => 'plugin_csmodule_mapping',
                 'type' => 'mapping',
                 'version' => $this->newversion
-            )
-        );
+            ]
+        ];
         $this->assertEquals($expectedTable, $queryTable);
-        $queryTable = $this->query(array('columns' => array('component', 'setting', 'value', 'type'), 'table' => 'config',
-            'where' => array(array('column' => 'component', 'value' => 'plugin_csmodule_mapping'), array('column' => 'setting', 'value' => 'installed'))));
-        $expectedTable = array(
-            0 => array(
+        $queryTable = $this->query(['columns' => ['component', 'setting', 'value', 'type'], 'table' => 'config',
+            'where' => [['column' => 'component', 'value' => 'plugin_csmodule_mapping'], ['column' => 'setting', 'value' => 'installed']]]);
+        $expectedTable = [
+            0 => [
                 'component' => 'plugin_csmodule_mapping',
                 'setting' => 'installed',
                 'value' => 1,
                 'type' => 'boolean'
-            ),
-        );
+            ],
+        ];
         $this->assertEquals($expectedTable, $queryTable);
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
     }
@@ -155,16 +155,16 @@ class mappingcstest extends unittestdatabase
         // Check tables are correct.
         $queryTable = $this->rowcount('plugins');
         $this->assertEquals(0, $queryTable);
-        $queryTable = $this->query(array('columns' => array('component', 'setting', 'value', 'type'), 'table' => 'config',
-            'where' => array(array('column' => 'component', 'value' => 'plugin_csmodule_mapping'), array('column' => 'setting', 'value' => 'installed'))));
-        $expectedTable = array(
-            0 => array(
+        $queryTable = $this->query(['columns' => ['component', 'setting', 'value', 'type'], 'table' => 'config',
+            'where' => [['column' => 'component', 'value' => 'plugin_csmodule_mapping'], ['column' => 'setting', 'value' => 'installed']]]);
+        $expectedTable = [
+            0 => [
                 'component' => 'plugin_csmodule_mapping',
                 'setting' => 'installed',
                 'value' => 0,
                 'type' => 'boolean'
-            ),
-        );
+            ],
+        ];
         $this->assertEquals($expectedTable, $queryTable);
     }
 
