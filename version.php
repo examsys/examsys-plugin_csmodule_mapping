@@ -22,5 +22,5 @@
 * @copyright Copyright (c) 2016 onwards The University of Nottingham
 */
 
-$this->version = '1.3.0';
-$this->requires = '7.5.0';
+$this->version = '1.4.0';
+$this->requires = '7.7.0';
