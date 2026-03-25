@@ -1,20 +1,21 @@
 <?php
 
-// This file is part of Rogō
+// This file is part of ExamSys
 //
-// Rogō is free software: you can redistribute it and/or modify
+// ExamSys is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Rogō is distributed in the hope that it will be useful,
+// ExamSys is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Rogō.  If not, see <http://www.gnu.org/licenses/>.
+// along with ExamSys.  If not, see <http://www.gnu.org/licenses/>.
 
+use plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping;
 use testing\unittest\unittestdatabase;
 use PHPUnit\DbUnit\DataSet\YamlDataSet;
 
@@ -38,7 +39,7 @@ class mappingcstest extends unittestdatabase
      */
     public function datageneration(): void
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping($this->db);
+        $mapping = new plugin_csmodule_mapping();
         $this->newversion = $mapping->get_file_version();
     }
 
@@ -48,8 +49,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         $mapping->expects($this->once())
@@ -65,8 +66,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn_my()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // Malaysia code.
@@ -82,8 +83,8 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_mapping_saturn_cn()
     {
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // China code.
@@ -100,8 +101,8 @@ class mappingcstest extends unittestdatabase
     public function test_get_mapping_unknown()
     {
         // webs ervice should not be called.
-        $mapping = $this->getMockBuilder('plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping')
-            ->setMethods(array('callws'))
+        $mapping = $this->getMockBuilder(plugin_csmodule_mapping::class)
+            ->onlyMethods(array('callws'))
             ->setConstructorArgs(array($this->db))
             ->getMock();
         // Un-recognised code.
@@ -117,7 +118,7 @@ class mappingcstest extends unittestdatabase
      */
     public function test_install()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $this->assertEquals('OK', $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
         $queryTable = $this->query(array('columns' => array('component', 'type', 'version'), 'table' => 'plugins'));
@@ -149,7 +150,7 @@ class mappingcstest extends unittestdatabase
      */
     public function test_uninstall()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
         $this->assertEquals('OK', $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password')));
         // Check tables are correct.
@@ -174,9 +175,9 @@ class mappingcstest extends unittestdatabase
      */
     public function test_get_plugin_version()
     {
-        $mapping = new plugins\mapping\plugin_csmodule_mapping\plugin_csmodule_mapping();
+        $mapping = new plugin_csmodule_mapping();
         $mapping->install($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
-        $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version('plugin_csmodule_mapping'));
+        $this->assertEquals($mapping->get_installed_version(), $mapping->get_plugin_version());
         $mapping->uninstall($this->config->get('cfg_phpunit_db_user'), $this->config->get('cfg_phpunit_db_password'));
     }
 }
