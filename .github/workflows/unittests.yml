@@ -1,0 +1,144 @@
+name: Unit tests
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - develop
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  codestyle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ExamSys
+        uses: actions/checkout@v7
+        with:
+          repository: examsys/examsys
+
+      - name: Checkout plugin
+        uses: actions/checkout@v7
+        with:
+          path: plugins/mapping/plugin_csmodule_mapping
+
+      - name: Configuring node & npm
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Installing node stuff
+        run: npm install
+
+      - name: Running grunt
+        run: npx grunt
+
+      - name: Run composer
+        run: composer install
+
+      - name: PHP Code Sniffer on plugin
+        run: vendor/squizlabs/php_codesniffer/bin/phpcs --standard=testing/codesniffer/Rogo/ruleset.xml -n ./plugins/mapping/plugin_csmodule_mapping
+
+  rector:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ExamSys
+        uses: actions/checkout@v7
+        with:
+          repository: examsys/examsys
+
+      - name: Checkout plugin
+        uses: actions/checkout@v7
+        with:
+          path: plugins/mapping/plugin_csmodule_mapping
+
+      - name: Configuring node & npm
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Installing node stuff
+        run: npm install
+
+      - name: Running grunt
+        run: npx grunt
+
+      - name: Run composer
+        run: composer install
+
+      - name: Run Rector on plugin
+        run: vendor/bin/rector process plugins/mapping/plugin_csmodule_mapping  --dry-run
+
+  phpunit:
+    runs-on: ubuntu-latest
+
+    container:
+      image: uonlearningtech/examsys-php-apache:${{ matrix.php }}
+      ports:
+        - 80
+      volumes:
+        - ${{ github.workspace }}:/var/www/html
+
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          # The MySQL docker container requires these environment variables to be set
+          # so we can create the test database.
+          # See: https://hub.docker.com/_/mysql
+          MYSQL_ROOT_PASSWORD: test
+        ports:
+          # Opens port 3306 on service container and host
+          # https://docs.github.com/en/actions/using-containerized-services/about-service-containers
+          - 3306:3306
+          # Before continuing, verify the mysql container is reachable from the ubuntu host
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: 8.3-nodebug
+            mysql: 8.4
+
+    steps:
+      - name: Checkout ExamSys
+        uses: actions/checkout@v7
+        with:
+          repository: examsys/examsys
+
+      - name: Checkout plugin
+        uses: actions/checkout@v7
+        with:
+          path: plugins/mapping/plugin_csmodule_mapping
+
+      - name: Create unattended installation files
+        run: |
+          cp .github/workflows/settings.xml config/settings.xml
+          cp .github/workflows/phpunit.xml config/phpunit.xml
+          sed -i 's/#dbUser#/root/g' config/phpunit.xml
+          sed -i 's/#dbPassword#/test/g' config/phpunit.xml
+          ls -l config
+
+      - name: Configuring node & npm
+        run: |
+          /root/.nvm/nvm.sh install
+          /root/.nvm/nvm.sh use
+
+      - name: Installing node stuff
+        run: npm install
+
+      - name: Running grunt
+        run: npx grunt
+
+      - name: Install ExamSys
+        run: php -dxdebug.mode=off cli/init.php -u root -p test -s mysql -t 3306 -n examsys
+
+      - name: Install unit test suite
+        # We need to make sure xdebug is off when running the unit tests, or they will fail here.
+        run: php -dxdebug.mode=off testing/unittest/cli/init.php --clean
+
+      - name: Run plugin unit tests
+        run: vendor/bin/phpunit -c testing/unittest/config/phpunit.xml --testsuite plugins
